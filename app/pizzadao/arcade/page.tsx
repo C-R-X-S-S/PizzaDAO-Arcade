@@ -159,7 +159,7 @@ export default function PizzaDaoArcadePage() {
                   <div className={styles.gameMeta}>
                     <h3>{game.name}</h3>
                     <p>{game.subtitle}</p>
-                    <span className={styles.playBtn}>Play Now</span>
+                    <img src={withBase('/pizzadao/play-now-btn.jpg')} alt="Play now" className={styles.playBtn} />
                   </div>
                   <img src={withBase(game.thumbnail)} alt={game.name} className={styles.gameThumb} />
                 </a>
