@@ -51,6 +51,7 @@ const GAME_OPTIONS = [
     link: 'https://pizzadao.github.io/picky_pizza/'
   }
 ];
+const STORAGE_KEY = 'pizzadao.arcade.layout.v3';
 const BASE_PATH = process.env.NODE_ENV === 'production' ? '/PizzaDAO-Arcade' : '';
 const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
 
@@ -67,15 +68,29 @@ function clamp(v: number, min: number, max: number) {
 export default function PizzaDaoArcadePage() {
   const [zooming, setZooming] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [editMode] = useState(false);
+  const [editMode, setEditMode] = useState(true);
   const [layout, setLayout] = useState<Layout>(DEFAULT_LAYOUT);
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<ActiveDrag | null>(null);
 
   useEffect(() => {
-    setLayout(DEFAULT_LAYOUT);
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      setLayout({
+        screen: parsed.screen || DEFAULT_LAYOUT.screen,
+        button: parsed.button || DEFAULT_LAYOUT.button,
+        joystick: parsed.joystick || DEFAULT_LAYOUT.joystick
+      });
+    } catch {}
   }, []);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(layout));
+    } catch {}
+  }, [layout]);
 
 
   useEffect(() => {
@@ -183,6 +198,23 @@ export default function PizzaDaoArcadePage() {
 
   return (
     <div className={styles.page}>
+      <div className={styles.builderBar}>
+        <button className={styles.builderBtn} onClick={() => setEditMode((v) => !v)}>
+          {editMode ? 'Lock Layout' : 'Edit Layout'}
+        </button>
+        <button className={styles.builderBtn} onClick={resetLayout}>Reset</button>
+        {editMode ? (
+          <div className={styles.tuneRow}>
+            <label>Screen W <input type="range" min={8} max={50} step={0.1} value={layout.screen.width} onChange={(e) => patchRect('screen', 'width', Number(e.target.value))} /></label>
+            <label>Screen H <input type="range" min={8} max={60} step={0.1} value={layout.screen.height} onChange={(e) => patchRect('screen', 'height', Number(e.target.value))} /></label>
+            <label>Btn X <input type="range" min={0} max={95} step={0.1} value={layout.button.left} onChange={(e) => patchRect('button', 'left', Number(e.target.value))} /></label>
+            <label>Btn Y <input type="range" min={0} max={95} step={0.1} value={layout.button.top} onChange={(e) => patchRect('button', 'top', Number(e.target.value))} /></label>
+            <label>Joy X <input type="range" min={0} max={95} step={0.1} value={layout.joystick.left} onChange={(e) => patchRect('joystick', 'left', Number(e.target.value))} /></label>
+            <label>Joy Y <input type="range" min={0} max={95} step={0.1} value={layout.joystick.top} onChange={(e) => patchRect('joystick', 'top', Number(e.target.value))} /></label>
+          </div>
+        ) : null}
+      </div>
+
       <div
         ref={sceneRef}
         className={`${styles.scene} ${zooming ? styles.crashZoom : ''}`}
