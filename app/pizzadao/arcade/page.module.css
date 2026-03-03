@@ -250,10 +250,12 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: center;
+  object-position: 50% 50%;
   background: #1c070d;
   border-left: 2px solid #ff3e62;
   padding: 8px;
+  display: block;
+  margin: 0 auto;
 }
 
 .gameMeta {
@@ -368,8 +370,11 @@
 
   .gameThumb {
     min-height: 120px;
+    max-height: 160px;
     border-left: 0;
     border-top: 2px solid #ff3e62;
+    object-position: center center;
+    padding: 8px 12px;
   }
 
   .gameMeta {
