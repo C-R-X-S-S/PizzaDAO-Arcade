@@ -59,9 +59,9 @@
   background:
     radial-gradient(circle at 28% 20%, rgba(255, 215, 102, .22) 0%, rgba(255, 215, 102, .10) 26%, rgba(255, 215, 102, 0) 68%),
     radial-gradient(circle at 42% 52%, rgba(255, 166, 30, .16) 0%, rgba(255, 166, 30, .08) 34%, rgba(255, 166, 30, 0) 74%);
-  filter: blur(20px);
-  opacity: .56;
-  animation: neonFlicker 3.1s infinite;
+  filter: blur(18px);
+  opacity: .66;
+  animation: neonFlicker 2.2s infinite;
 }
 
 .crashZoom {
@@ -355,23 +355,23 @@
 }
 
 @keyframes neonFlicker {
-  0%, 17%, 22%, 41%, 49%, 70%, 100% {
-    opacity: .52;
+  0%, 16%, 23%, 40%, 48%, 69%, 100% {
+    opacity: .66;
   }
 
-  18%, 42% {
-    opacity: .41;
+  17%, 41% {
+    opacity: .42;
   }
 
-  21%, 47% {
-    opacity: .6;
+  21%, 46% {
+    opacity: .82;
   }
 
-  71%, 72% {
-    opacity: .46;
+  70%, 72% {
+    opacity: .5;
   }
 
   73% {
-    opacity: .56;
+    opacity: .74;
   }
 }
