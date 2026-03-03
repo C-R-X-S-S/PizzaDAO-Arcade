@@ -3,5 +3,5 @@
 3:I[97367,["/PizzaDAO-Arcade/_next/static/chunks/2f236954d6a65e12.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
 :HL["/PizzaDAO-Arcade/_next/static/chunks/1d2f3abe03a49a21.css","style"]
-0:{"buildId":"UAh21XHEe-1pAwKYU-TMh","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/PizzaDAO-Arcade/_next/static/chunks/1d2f3abe03a49a21.css","precedence":"next"}],["$","script","script-0",{"src":"/PizzaDAO-Arcade/_next/static/chunks/d166b32c61b8b2df.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"2aqFjwY0_yp8OaOVg0c7L","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/PizzaDAO-Arcade/_next/static/chunks/1d2f3abe03a49a21.css","precedence":"next"}],["$","script","script-0",{"src":"/PizzaDAO-Arcade/_next/static/chunks/d166b32c61b8b2df.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
