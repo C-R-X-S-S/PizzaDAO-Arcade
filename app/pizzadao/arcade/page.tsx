@@ -68,6 +68,7 @@ export default function PizzaDaoArcadePage() {
   const [showMenu, setShowMenu] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [layout, setLayout] = useState<Layout>(DEFAULT_LAYOUT);
+  const [basePath, setBasePath] = useState('');
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<ActiveDrag | null>(null);
 
@@ -82,6 +83,11 @@ export default function PizzaDaoArcadePage() {
         joystick: parsed.joystick || DEFAULT_LAYOUT.joystick
       });
     } catch {}
+  }, []);
+
+  useEffect(() => {
+    const m = window.location.pathname.match(/^\/PizzaDAO-Arcade(?=\/|$)/);
+    setBasePath(m ? '/PizzaDAO-Arcade' : '');
   }, []);
 
   useEffect(() => {
@@ -171,6 +177,8 @@ export default function PizzaDaoArcadePage() {
     }));
   }
 
+  const withBase = (src: string) => (src.startsWith('/') ? `${basePath}${src}` : src);
+
   const screenStyle = {
     left: `${layout.screen.left}%`,
     top: `${layout.screen.top}%`,
@@ -217,7 +225,7 @@ export default function PizzaDaoArcadePage() {
         aria-hidden={showMenu}
       >
         <img
-          src="/pizzadao/arcade-visual.jpg"
+          src={withBase('/pizzadao/arcade-visual.jpg')}
           alt="PizzaDAO arcade"
           className={styles.background}
         />
@@ -229,7 +237,7 @@ export default function PizzaDaoArcadePage() {
         >
           <video
             className={styles.screenVideo}
-            src="/pizzadao/arcade-screen.mp4"
+            src={withBase('/pizzadao/arcade-screen.mp4')}
             autoPlay
             loop
             muted
@@ -279,7 +287,7 @@ export default function PizzaDaoArcadePage() {
         <div className={styles.menuWrap}>
           <div className={styles.menuCard}>
             <div className={styles.menuHeader}>
-              <img src="/pizzadao/arcade-menu-logo.jpg" alt="PizzaDAO Arcade" className={styles.menuLogo} />
+              <img src={withBase('/pizzadao/arcade-menu-logo.jpg')} alt="PizzaDAO Arcade" className={styles.menuLogo} />
             </div>
             <div className={styles.menuGrid}>
               {GAME_OPTIONS.map((game) => (
@@ -295,7 +303,7 @@ export default function PizzaDaoArcadePage() {
                     <p>{game.subtitle}</p>
                     <span className={styles.playBtn}>Play Now</span>
                   </div>
-                  <img src={game.thumbnail} alt={game.name} className={styles.gameThumb} />
+                  <img src={withBase(game.thumbnail)} alt={game.name} className={styles.gameThumb} />
                 </a>
               ))}
             </div>
