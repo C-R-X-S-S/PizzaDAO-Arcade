@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .page {
   position: relative;
   min-height: calc(100vh - 40px);
@@ -279,21 +281,30 @@
 .playBtn {
   justify-self: start;
   display: inline-block;
-  min-width: 150px;
-  padding: 8px 18px 10px;
-  border: 4px solid #0f42c8;
-  background: linear-gradient(180deg, #2fb7ff 0%, #1d89f6 48%, #0f6ae6 100%);
-  color: #f3fbff;
-  font-weight: 900;
-  font-size: clamp(13px, 1.45vw, 20px);
+  min-width: 168px;
+  padding: 10px 16px 12px;
+  border: 0;
+  background: linear-gradient(180deg, #35c3ff 0%, #1485f2 54%, #0a58d6 100%);
+  color: #f4fbff;
+  font-family: "Press Start 2P", "VT323", "Courier New", monospace;
+  font-weight: 700;
+  font-size: clamp(12px, 1.2vw, 16px);
   line-height: 1;
-  letter-spacing: .04em;
-  text-shadow: 2px 2px 0 #0f3d97;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0 #18439c;
+  image-rendering: pixelated;
   box-shadow:
-    inset 0 0 0 2px rgba(124, 234, 255, .65),
-    inset 0 -4px 0 rgba(8, 47, 151, .45),
-    0 0 0 2px #072a8e;
-  clip-path: polygon(0 8%, 3% 8%, 3% 0, 97% 0, 97% 8%, 100% 8%, 100% 92%, 97% 92%, 97% 100%, 3% 100%, 3% 92%, 0 92%);
+    inset 0 0 0 3px #66dcff,
+    inset 0 -5px 0 #0b45bf,
+    0 0 0 3px #163fb4,
+    4px 4px 0 #0b236f;
+  clip-path: polygon(
+    0 14%, 3.5% 14%, 3.5% 0,
+    96.5% 0, 96.5% 14%, 100% 14%,
+    100% 86%, 96.5% 86%, 96.5% 100%,
+    3.5% 100%, 3.5% 86%, 0 86%
+  );
 }
 
 @media (max-width: 760px) {
