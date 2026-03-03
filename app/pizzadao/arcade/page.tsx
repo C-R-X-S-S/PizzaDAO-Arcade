@@ -52,8 +52,7 @@ const GAME_OPTIONS = [
   }
 ];
 const STORAGE_KEY = 'pizzadao.arcade.layout.v2';
-const IS_PROD = process.env.NODE_ENV === 'production';
-const BASE_PATH = IS_PROD ? '/PizzaDAO-Arcade' : '';
+const BASE_PATH = process.env.NODE_ENV === 'production' ? '/PizzaDAO-Arcade' : '';
 const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
 
 const DEFAULT_LAYOUT: Layout = {
@@ -69,12 +68,22 @@ function clamp(v: number, min: number, max: number) {
 export default function PizzaDaoArcadePage() {
   const [zooming, setZooming] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [isLiveSite, setIsLiveSite] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [layout, setLayout] = useState<Layout>(DEFAULT_LAYOUT);
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<ActiveDrag | null>(null);
 
   useEffect(() => {
+    const live = typeof window !== 'undefined' && window.location.hostname === 'c-r-x-s-s.github.io';
+    setIsLiveSite(live);
+
+    if (live) {
+      setEditMode(false);
+      setLayout(DEFAULT_LAYOUT);
+      return;
+    }
+
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
@@ -89,10 +98,11 @@ export default function PizzaDaoArcadePage() {
 
 
   useEffect(() => {
+    if (isLiveSite) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(layout));
     } catch {}
-  }, [layout]);
+  }, [layout, isLiveSite]);
 
   useEffect(() => {
     if (!zooming) return;
@@ -199,7 +209,7 @@ export default function PizzaDaoArcadePage() {
 
   return (
     <div className={styles.page}>
-      {!IS_PROD ? (
+      {!isLiveSite ? (
         <div className={styles.builderBar}>
           <button className={styles.builderBtn} onClick={() => setEditMode((v) => !v)}>
             {editMode ? 'Lock Layout' : 'Edit Layout'}
