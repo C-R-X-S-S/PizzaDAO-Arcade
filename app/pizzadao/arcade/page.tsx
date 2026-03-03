@@ -51,7 +51,7 @@ const GAME_OPTIONS = [
     link: 'https://pizzadao.github.io/picky_pizza/'
   }
 ];
-const STORAGE_KEY = 'pizzadao.arcade.layout.v1';
+const STORAGE_KEY = 'pizzadao.arcade.layout.v2';
 const BASE_PATH = process.env.NODE_ENV === 'production' ? '/PizzaDAO-Arcade' : '';
 const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
 

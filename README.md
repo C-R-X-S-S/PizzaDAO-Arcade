@@ -2,6 +2,10 @@
 
 Retro PizzaDAO arcade menu experience built with Next.js.
 
+## Live site
+
+https://c-r-x-s-s.github.io/PizzaDAO-Arcade/
+
 ## Run locally
 
 ```bash
