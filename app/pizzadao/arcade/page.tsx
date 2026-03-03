@@ -52,6 +52,8 @@ const GAME_OPTIONS = [
   }
 ];
 const STORAGE_KEY = 'pizzadao.arcade.layout.v1';
+const BASE_PATH = process.env.NODE_ENV === 'production' ? '/PizzaDAO-Arcade' : '';
+const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
 
 const DEFAULT_LAYOUT: Layout = {
   screen: { left: 33.7, top: 20.2, width: 32.3, height: 39.6 },
@@ -68,7 +70,6 @@ export default function PizzaDaoArcadePage() {
   const [showMenu, setShowMenu] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [layout, setLayout] = useState<Layout>(DEFAULT_LAYOUT);
-  const [basePath, setBasePath] = useState('');
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<ActiveDrag | null>(null);
 
@@ -85,10 +86,6 @@ export default function PizzaDaoArcadePage() {
     } catch {}
   }, []);
 
-  useEffect(() => {
-    const m = window.location.pathname.match(/^\/PizzaDAO-Arcade(?=\/|$)/);
-    setBasePath(m ? '/PizzaDAO-Arcade' : '');
-  }, []);
 
   useEffect(() => {
     try {
@@ -177,7 +174,6 @@ export default function PizzaDaoArcadePage() {
     }));
   }
 
-  const withBase = (src: string) => (src.startsWith('/') ? `${basePath}${src}` : src);
 
   const screenStyle = {
     left: `${layout.screen.left}%`,
