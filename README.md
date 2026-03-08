@@ -1,6 +1,6 @@
 # PizzaDAO-Arcade
 
-Retro PizzaDAO arcade menu experience built with Next.js.
+Retro PizzaDAO arcade experience built with Next.js.
 
 ## Live site
 
