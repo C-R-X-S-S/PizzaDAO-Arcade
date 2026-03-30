@@ -53,6 +53,8 @@ const GAME_OPTIONS = [
   }
 ];
 const STORAGE_KEY = 'pizzadao.arcade.layout.v1';
+const BASE_PATH = process.env.NODE_ENV === 'production' ? '/PizzaDAO-Arcade' : '';
+const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
 
 const DEFAULT_LAYOUT: Layout = {
   screen: { left: 33.7, top: 20.2, width: 32.3, height: 39.6 },
@@ -105,7 +107,7 @@ export default function PizzaDaoArcadePage() {
   }, [zooming]);
 
   useEffect(() => {
-    const audio = new Audio('/pizzadao/start-button-sound.mp3');
+    const audio = new Audio(withBase('/pizzadao/start-button-sound.mp3'));
     audio.preload = 'auto';
     clickSfxRef.current = audio;
     return () => {
@@ -277,7 +279,7 @@ export default function PizzaDaoArcadePage() {
         aria-hidden={showMenu}
       >
         <img
-          src="/pizzadao/arcade-visual.jpg?v=20260330-logo1"
+          src={withBase('/pizzadao/arcade-visual.jpg?v=20260330-logo1')}
           alt="PizzaDAO arcade"
           className={styles.background}
         />
@@ -289,7 +291,7 @@ export default function PizzaDaoArcadePage() {
         >
           <video
             className={styles.screenVideo}
-            src="/pizzadao/arcade-screen.mp4"
+            src={withBase('/pizzadao/arcade-screen.mp4')}
             autoPlay
             loop
             muted
@@ -325,7 +327,7 @@ export default function PizzaDaoArcadePage() {
           onPointerDown={(e) => startDrag(e, 'pizza', 'move')}
           aria-label="Stool pizza"
         >
-          <img src="/pizzadao/stool-pizza-v2.png" alt="Pizza plate" className={styles.pizzaImage} />
+          <img src={withBase('/pizzadao/stool-pizza-v2.png')} alt="Pizza plate" className={styles.pizzaImage} />
           {editMode ? (
             <span
               className={styles.resizeHandle}
@@ -341,7 +343,7 @@ export default function PizzaDaoArcadePage() {
           onPointerDown={(e) => startDrag(e, 'button', 'move')}
           aria-label="Start"
         >
-          <img src="/pizzadao/start-button.png" alt="Start" className={styles.startButtonImage} />
+          <img src={withBase('/pizzadao/start-button.png')} alt="Start" className={styles.startButtonImage} />
           {editMode ? (
             <span
               className={styles.resizeHandle}
@@ -355,7 +357,7 @@ export default function PizzaDaoArcadePage() {
         <div className={styles.menuWrap}>
           <div className={styles.menuCard}>
             <div className={styles.menuHeader}>
-              <img src="/pizzadao/arcade-menu-logo.jpg" alt="PizzaDAO Arcade" className={styles.menuLogo} />
+              <img src={withBase('/pizzadao/arcade-menu-logo.jpg')} alt="PizzaDAO Arcade" className={styles.menuLogo} />
             </div>
             <div className={styles.menuGrid}>
               {GAME_OPTIONS.map((game) => (
@@ -370,9 +372,9 @@ export default function PizzaDaoArcadePage() {
                   <div className={styles.gameMeta}>
                     <h3>{game.name}</h3>
                     <p>{game.subtitle}</p>
-                    <img src="/pizzadao/playnow.jpeg" alt="Play Now" className={styles.playBtnImage} />
+                    <img src={withBase('/pizzadao/playnow.jpeg')} alt="Play Now" className={styles.playBtnImage} />
                   </div>
-                  <img src={game.thumbnail} alt={game.name} className={styles.gameThumb} />
+                  <img src={withBase(game.thumbnail)} alt={game.name} className={styles.gameThumb} />
                 </a>
               ))}
             </div>
