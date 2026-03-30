@@ -53,7 +53,8 @@ const GAME_OPTIONS = [
   }
 ];
 const STORAGE_KEY = 'pizzadao.arcade.layout.v1';
-const BASE_PATH = process.env.NODE_ENV === 'production' ? '/PizzaDAO-Arcade' : '';
+const IS_PROD = process.env.NODE_ENV === 'production';
+const BASE_PATH = IS_PROD ? '/PizzaDAO-Arcade' : '';
 const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
 
 const DEFAULT_LAYOUT: Layout = {
@@ -71,12 +72,14 @@ export default function PizzaDaoArcadePage() {
   const [zooming, setZooming] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const canEdit = !IS_PROD && editMode;
   const [layout, setLayout] = useState<Layout>(DEFAULT_LAYOUT);
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<ActiveDrag | null>(null);
   const clickSfxRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    if (IS_PROD) return;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
@@ -95,6 +98,7 @@ export default function PizzaDaoArcadePage() {
   }, []);
 
   useEffect(() => {
+    if (IS_PROD) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(layout));
     } catch {}
@@ -158,7 +162,7 @@ export default function PizzaDaoArcadePage() {
   }, []);
 
   function startDrag(e: React.PointerEvent, target: keyof Layout, mode: 'move' | 'resize') {
-    if (!editMode) return;
+    if (IS_PROD || !canEdit) return;
     e.preventDefault();
     e.stopPropagation();
 
@@ -181,7 +185,7 @@ export default function PizzaDaoArcadePage() {
   }
 
   function onEnter() {
-    if (zooming || editMode) return;
+    if (zooming || canEdit) return;
     playClickSfx();
     setZooming(true);
   }
@@ -251,27 +255,29 @@ export default function PizzaDaoArcadePage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.builderBar}>
-        <button className={styles.builderBtn} onClick={() => setEditMode((v) => !v)}>
-          {editMode ? 'Lock Layout' : 'Edit Layout'}
-        </button>
-        <button className={styles.builderBtn} onClick={resetLayout}>Reset</button>
-        {editMode ? (
-          <div className={styles.tuneRow}>
-            <label>Screen W <input type="range" min={8} max={50} step={0.1} value={layout.screen.width} onChange={(e) => patchRect('screen', 'width', Number(e.target.value))} /></label>
-            <label>Screen H <input type="range" min={8} max={60} step={0.1} value={layout.screen.height} onChange={(e) => patchRect('screen', 'height', Number(e.target.value))} /></label>
-            <label>Btn X <input type="range" min={0} max={95} step={0.1} value={layout.button.left} onChange={(e) => patchRect('button', 'left', Number(e.target.value))} /></label>
-            <label>Btn Y <input type="range" min={0} max={95} step={0.1} value={layout.button.top} onChange={(e) => patchRect('button', 'top', Number(e.target.value))} /></label>
-            <label>Joy X <input type="range" min={0} max={95} step={0.1} value={layout.joystick.left} onChange={(e) => patchRect('joystick', 'left', Number(e.target.value))} /></label>
-            <label>Joy Y <input type="range" min={0} max={95} step={0.1} value={layout.joystick.top} onChange={(e) => patchRect('joystick', 'top', Number(e.target.value))} /></label>
-            <label>Pizza X <input type="range" min={0} max={95} step={0.1} value={layout.pizza.left} onChange={(e) => patchRect('pizza', 'left', Number(e.target.value))} /></label>
-            <label>Pizza Y <input type="range" min={0} max={95} step={0.1} value={layout.pizza.top} onChange={(e) => patchRect('pizza', 'top', Number(e.target.value))} /></label>
-            <label>Pizza RX <input type="range" min={-70} max={70} step={0.5} value={layout.pizza.rotateX ?? 0} onChange={(e) => patchPizzaAxis('rotateX', Number(e.target.value))} /></label>
-            <label>Pizza RY <input type="range" min={-35} max={35} step={0.5} value={layout.pizza.rotateY ?? 0} onChange={(e) => patchPizzaAxis('rotateY', Number(e.target.value))} /></label>
-            <label>Pizza RZ <input type="range" min={-45} max={45} step={0.5} value={layout.pizza.rotateZ ?? layout.pizza.rotate ?? 0} onChange={(e) => patchPizzaAxis('rotateZ', Number(e.target.value))} /></label>
-          </div>
-        ) : null}
-      </div>
+      {!IS_PROD ? (
+        <div className={styles.builderBar}>
+          <button className={styles.builderBtn} onClick={() => setEditMode((v) => !v)}>
+            {canEdit ? 'Lock Layout' : 'Edit Layout'}
+          </button>
+          <button className={styles.builderBtn} onClick={resetLayout}>Reset</button>
+          {canEdit ? (
+            <div className={styles.tuneRow}>
+              <label>Screen W <input type="range" min={8} max={50} step={0.1} value={layout.screen.width} onChange={(e) => patchRect('screen', 'width', Number(e.target.value))} /></label>
+              <label>Screen H <input type="range" min={8} max={60} step={0.1} value={layout.screen.height} onChange={(e) => patchRect('screen', 'height', Number(e.target.value))} /></label>
+              <label>Btn X <input type="range" min={0} max={95} step={0.1} value={layout.button.left} onChange={(e) => patchRect('button', 'left', Number(e.target.value))} /></label>
+              <label>Btn Y <input type="range" min={0} max={95} step={0.1} value={layout.button.top} onChange={(e) => patchRect('button', 'top', Number(e.target.value))} /></label>
+              <label>Joy X <input type="range" min={0} max={95} step={0.1} value={layout.joystick.left} onChange={(e) => patchRect('joystick', 'left', Number(e.target.value))} /></label>
+              <label>Joy Y <input type="range" min={0} max={95} step={0.1} value={layout.joystick.top} onChange={(e) => patchRect('joystick', 'top', Number(e.target.value))} /></label>
+              <label>Pizza X <input type="range" min={0} max={95} step={0.1} value={layout.pizza.left} onChange={(e) => patchRect('pizza', 'left', Number(e.target.value))} /></label>
+              <label>Pizza Y <input type="range" min={0} max={95} step={0.1} value={layout.pizza.top} onChange={(e) => patchRect('pizza', 'top', Number(e.target.value))} /></label>
+              <label>Pizza RX <input type="range" min={-70} max={70} step={0.5} value={layout.pizza.rotateX ?? 0} onChange={(e) => patchPizzaAxis('rotateX', Number(e.target.value))} /></label>
+              <label>Pizza RY <input type="range" min={-35} max={35} step={0.5} value={layout.pizza.rotateY ?? 0} onChange={(e) => patchPizzaAxis('rotateY', Number(e.target.value))} /></label>
+              <label>Pizza RZ <input type="range" min={-45} max={45} step={0.5} value={layout.pizza.rotateZ ?? layout.pizza.rotate ?? 0} onChange={(e) => patchPizzaAxis('rotateZ', Number(e.target.value))} /></label>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       <div
         ref={sceneRef}
@@ -285,7 +291,7 @@ export default function PizzaDaoArcadePage() {
         />
 
         <div
-          className={`${styles.gifScreen} ${editMode ? styles.editing : ''}`}
+          className={`${styles.gifScreen} ${canEdit ? styles.editing : ''}`}
           style={screenStyle}
           onPointerDown={(e) => startDrag(e, 'screen', 'move')}
         >
@@ -297,7 +303,7 @@ export default function PizzaDaoArcadePage() {
             muted
             playsInline
           />
-          {editMode ? (
+          {canEdit ? (
             <span
               className={styles.resizeHandle}
               onPointerDown={(e) => startDrag(e, 'screen', 'resize')}
@@ -306,14 +312,14 @@ export default function PizzaDaoArcadePage() {
         </div>
 
         <div
-          className={`${styles.joystickOverlay} ${editMode ? styles.editing : ''}`}
+          className={`${styles.joystickOverlay} ${canEdit ? styles.editing : ''}`}
           style={joystickStyle}
           onPointerDown={(e) => startDrag(e, 'joystick', 'move')}
           aria-hidden
         >
           <span className={styles.joystickStem} />
           <span className={styles.joystickKnob} />
-          {editMode ? (
+          {canEdit ? (
             <span
               className={styles.resizeHandle}
               onPointerDown={(e) => startDrag(e, 'joystick', 'resize')}
@@ -322,13 +328,13 @@ export default function PizzaDaoArcadePage() {
         </div>
 
         <div
-          className={`${styles.pizzaOverlay} ${editMode ? styles.editing : ''}`}
+          className={`${styles.pizzaOverlay} ${canEdit ? styles.editing : ''}`}
           style={pizzaStyle}
           onPointerDown={(e) => startDrag(e, 'pizza', 'move')}
           aria-label="Stool pizza"
         >
           <img src={withBase('/pizzadao/stool-pizza-v2.png')} alt="Pizza plate" className={styles.pizzaImage} />
-          {editMode ? (
+          {canEdit ? (
             <span
               className={styles.resizeHandle}
               onPointerDown={(e) => startDrag(e, 'pizza', 'resize')}
@@ -337,14 +343,14 @@ export default function PizzaDaoArcadePage() {
         </div>
 
         <button
-          className={`${styles.enterButton} ${editMode ? styles.editing : ''}`}
+          className={`${styles.enterButton} ${canEdit ? styles.editing : ''}`}
           style={buttonStyle}
           onClick={onEnter}
           onPointerDown={(e) => startDrag(e, 'button', 'move')}
           aria-label="Start"
         >
           <img src={withBase('/pizzadao/start-button.png')} alt="Start" className={styles.startButtonImage} />
-          {editMode ? (
+          {canEdit ? (
             <span
               className={styles.resizeHandle}
               onPointerDown={(e) => startDrag(e, 'button', 'resize')}
