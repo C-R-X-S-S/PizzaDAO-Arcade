@@ -108,6 +108,19 @@
   display: block;
 }
 
+.pizzaOverlay {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pizzaImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 .crxssHotspot {
   position: absolute;
   z-index: 6;
