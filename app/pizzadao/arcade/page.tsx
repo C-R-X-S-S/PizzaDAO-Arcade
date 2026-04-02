@@ -72,14 +72,13 @@ export default function PizzaDaoArcadePage() {
   const [zooming, setZooming] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const canEdit = !IS_PROD && editMode;
+  const canEdit = editMode; // TEMP: enable edit controls on prod
   const [layout, setLayout] = useState<Layout>(DEFAULT_LAYOUT);
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<ActiveDrag | null>(null);
   const clickSfxRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    if (IS_PROD) return;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
@@ -98,7 +97,6 @@ export default function PizzaDaoArcadePage() {
   }, []);
 
   useEffect(() => {
-    if (IS_PROD) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(layout));
     } catch {}
@@ -162,7 +160,7 @@ export default function PizzaDaoArcadePage() {
   }, []);
 
   function startDrag(e: React.PointerEvent, target: keyof Layout, mode: 'move' | 'resize') {
-    if (IS_PROD || !canEdit) return;
+    if (!canEdit) return;
     e.preventDefault();
     e.stopPropagation();
 
@@ -255,12 +253,13 @@ export default function PizzaDaoArcadePage() {
 
   return (
     <div className={styles.page}>
-      {!IS_PROD ? (
-        <div className={styles.builderBar}>
+      {/* TEMP: edit controls on prod */}
+      <div className={styles.builderBar}>
           <button className={styles.builderBtn} onClick={() => setEditMode((v) => !v)}>
             {canEdit ? 'Lock Layout' : 'Edit Layout'}
           </button>
           <button className={styles.builderBtn} onClick={resetLayout}>Reset</button>
+          <button className={styles.builderBtn} onClick={() => { navigator.clipboard.writeText(JSON.stringify(layout, null, 2)); alert('Layout JSON copied!'); }}>Copy Layout JSON</button>
           {canEdit ? (
             <div className={styles.tuneRow}>
               <label>Screen W <input type="range" min={8} max={50} step={0.1} value={layout.screen.width} onChange={(e) => patchRect('screen', 'width', Number(e.target.value))} /></label>
@@ -277,7 +276,6 @@ export default function PizzaDaoArcadePage() {
             </div>
           ) : null}
         </div>
-      ) : null}
 
       <div
         ref={sceneRef}
