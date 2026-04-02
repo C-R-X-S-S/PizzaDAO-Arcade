@@ -1,44 +1,8 @@
 .page {
   position: relative;
   min-height: calc(100vh - 40px);
-  overflow-x: visible;
-  overflow-y: hidden;
+  overflow: visible;
   border-radius: 16px;
-}
-
-.builderBar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 auto 12px;
-  width: 100%;
-  max-width: 1200px;
-  flex-wrap: wrap;
-}
-
-.builderBtn {
-  border: 1px solid rgba(130, 165, 255, .45);
-  background: rgba(16, 31, 65, .9);
-  color: #dbe6ff;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.tuneRow {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.tuneRow label {
-  font-size: 12px;
-  color: #b8caef;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .scene {
@@ -83,10 +47,6 @@
 
 .gifScreen {
   position: absolute;
-  left: 33.7%;
-  top: 20.2%;
-  width: 32.3%;
-  height: 39.6%;
   border-radius: 8px;
   overflow: hidden;
   background: #030816;
@@ -101,31 +61,10 @@
   pointer-events: none;
 }
 
-.editing {
-  outline: 2px dashed rgba(88, 178, 255, .95);
-  outline-offset: 1px;
-}
-
-.resizeHandle {
-  position: absolute;
-  right: -7px;
-  bottom: -7px;
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  background: #7ad1ff;
-  border: 1px solid #0a2f4e;
-  cursor: nwse-resize;
-}
-
 .joystickOverlay {
   position: absolute;
-  left: 49.5%;
-  top: 58.8%;
-  width: 3.4%;
-  height: 10.5%;
   z-index: 20;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .joystickStem {
@@ -152,19 +91,6 @@
   box-shadow: 0 0 0 1px rgba(255, 255, 255, .24), 0 8px 14px rgba(0, 0, 0, .55);
 }
 
-.pizzaOverlay {
-  position: absolute;
-  z-index: 10;
-  pointer-events: auto;
-}
-
-.pizzaImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
 .enterButton {
   position: absolute;
   z-index: 9;
@@ -180,6 +106,13 @@
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+.crxssHotspot {
+  position: absolute;
+  z-index: 6;
+  cursor: pointer;
+  transform-origin: 50% 50%;
 }
 
 .menuWrap {
@@ -231,14 +164,6 @@
   width: min(720px, 92%);
   image-rendering: pixelated;
   filter: saturate(1.06) contrast(1.04);
-}
-
-.menuSubtitle {
-  color: #7ef0ff;
-  font-size: clamp(16px, 2.1vw, 28px);
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-shadow: 0 0 8px rgba(58, 236, 255, .5);
 }
 
 .menuGrid {
@@ -301,87 +226,29 @@
 }
 
 @media (max-width: 760px) {
-  .gameCard {
-    grid-template-columns: 1fr;
-  }
-
-  .gameThumb {
-    min-height: 140px;
-    border-left: 0;
-    border-top: 2px solid #6f32ff;
-  }
+  .gameCard { grid-template-columns: 1fr; }
+  .gameThumb { min-height: 140px; border-left: 0; border-top: 2px solid #6f32ff; }
 }
 
 @keyframes blink {
-  0%, 48% {
-    filter: brightness(1.1);
-  }
-
-  50%, 100% {
-    filter: brightness(.62);
-  }
-}
-
-@keyframes drift {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(6px);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: .6;
-  }
-
-  50% {
-    opacity: 1;
-  }
+  0%, 48% { filter: brightness(1.1); }
+  50%, 100% { filter: brightness(.62); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes menuRise {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(.97);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes neonFlicker {
-  0%, 17%, 22%, 41%, 49%, 70%, 100% {
-    opacity: .52;
-  }
-
-  18%, 42% {
-    opacity: .41;
-  }
-
-  21%, 47% {
-    opacity: .6;
-  }
-
-  71%, 72% {
-    opacity: .46;
-  }
-
-  73% {
-    opacity: .56;
-  }
+  0%, 17%, 22%, 41%, 49%, 70%, 100% { opacity: .52; }
+  18%, 42% { opacity: .41; }
+  21%, 47% { opacity: .6; }
+  71%, 72% { opacity: .46; }
+  73% { opacity: .56; }
 }
