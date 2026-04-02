@@ -58,10 +58,9 @@ const BASE_PATH = IS_PROD ? '/PizzaDAO-Arcade' : '';
 const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
 
 const DEFAULT_LAYOUT: Layout = {
-  // Locked layout for live site, tuned to the PizzaDAO background image geometry
-  screen: { left: 37.78333333333333, top: 19.949902305588118, width: 24.883333333333333, height: 30.971629542790154 },
-  button: { left: 52.96666666666666, top: 52.52289957014459, width: 8.2, height: 4.574755763970301 },
-  joystick: { left: 48.916666666666664, top: 49.92153184837827, width: 3.4, height: 10.5 },
+  screen: { left: 33.7, top: 20.2, width: 32.3, height: 39.6 },
+  button: { left: 80.3, top: 59.2, width: 10.2, height: 5.2 },
+  joystick: { left: 49.5, top: 58.8, width: 3.4, height: 10.5 },
   pizza: { left: 77.4, top: 53.8, width: 15.6, height: 8.8, rotate: -7, rotateX: 0, rotateY: 0, rotateZ: -7 }
 };
 
