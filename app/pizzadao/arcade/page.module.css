@@ -1,8 +1,9 @@
 .page {
   position: relative;
-  min-height: calc(100vh - 40px);
+  min-height: 100vh;
   overflow: visible;
-  border-radius: 16px;
+  border-radius: 0;
+  background: #0a0a1a;
 }
 
 .scene {
@@ -129,7 +130,7 @@
 }
 
 .menuWrap {
-  position: absolute;
+  position: fixed;
   inset: 0;
   display: block;
   overflow-y: auto;
@@ -236,6 +237,25 @@
   width: clamp(120px, 16vw, 220px);
   height: auto;
   image-rendering: auto;
+}
+
+.menuCredit {
+  display: block;
+  text-align: center;
+  margin: 20px auto 4px;
+}
+
+.menuCreditImg {
+  width: clamp(100px, 14vw, 180px);
+  height: auto;
+  image-rendering: pixelated;
+  filter: brightness(0) invert(1);
+  opacity: 1;
+  transition: opacity .2s;
+}
+
+.menuCreditImg:hover {
+  opacity: .72;
 }
 
 @media (max-width: 760px) {

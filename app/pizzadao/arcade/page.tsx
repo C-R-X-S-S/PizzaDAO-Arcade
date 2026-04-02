@@ -3,9 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './page.module.css';
 
-const IS_PROD = process.env.NODE_ENV === 'production';
-const BASE_PATH = IS_PROD ? '/PizzaDAO-Arcade' : '';
-const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : src);
+const withBase = (src: string) => src;
 
 const GAME_OPTIONS = [
   { name: 'Bitcoin Pizza Blastoff', subtitle: 'Orbit Run', thumbnail: 'https://c-r-x-s-s.github.io/Bitcoin-Pizza-Blastoff/Assets/Visual/logo.png', link: 'https://c-r-x-s-s.github.io/Bitcoin-Pizza-Blastoff/' },
@@ -36,6 +34,21 @@ export default function PizzaDaoArcadePage() {
     return () => clearTimeout(timer);
   }, [zooming]);
 
+  /* Hide Mission Control shell (sidebar + main padding) so arcade is full-bleed */
+  useEffect(() => {
+    const sidebar = document.querySelector('.sidebar') as HTMLElement | null;
+    const main = document.querySelector('.main') as HTMLElement | null;
+    const shell = document.querySelector('.shell') as HTMLElement | null;
+    if (sidebar) sidebar.style.display = 'none';
+    if (main) { main.style.padding = '0'; main.style.margin = '0'; main.style.maxWidth = 'none'; }
+    if (shell) { shell.style.display = 'block'; shell.style.padding = '0'; }
+    return () => {
+      if (sidebar) sidebar.style.display = '';
+      if (main) { main.style.padding = ''; main.style.margin = ''; main.style.maxWidth = ''; }
+      if (shell) { shell.style.display = ''; shell.style.padding = ''; }
+    };
+  }, []);
+
   useEffect(() => {
     const audio = new Audio(withBase('/pizzadao/start-button-sound.mp3'));
     audio.preload = 'auto';
@@ -59,6 +72,12 @@ export default function PizzaDaoArcadePage() {
     e.preventDefault();
     playClickSfx();
     setTimeout(() => { window.open(link, '_blank', 'noopener,noreferrer'); }, 90);
+  }
+
+  function onCreditClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    playClickSfx();
+    setTimeout(() => { window.open('https://crxss.xyz', '_blank', 'noopener,noreferrer'); }, 90);
   }
 
   return (
@@ -106,6 +125,9 @@ export default function PizzaDaoArcadePage() {
                 </a>
               ))}
             </div>
+            <a href="https://crxss.xyz" target="_blank" rel="noopener noreferrer" className={styles.menuCredit} onClick={onCreditClick}>
+              <img src={withBase("/pizzadao/createdbycrxss-8bit.png")} alt="Created by CRXSS" className={styles.menuCreditImg} />
+            </a>
           </div>
         </div>
       ) : null}
