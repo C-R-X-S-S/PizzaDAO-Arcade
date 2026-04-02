@@ -21,6 +21,7 @@ const L = {
   screen:   { left: 37.7667, top: 19.8999, width: 24.6333, height: 31.5969 },
   joystick: { left: 49.0,    top: 50.3967, width: 1.7,     height: 5.25 },
   button:   { left: 56.0417, top: 59.3428, width: 10.9344, height: 5.7158 },
+  pizza:    { left: 76.5688, top: 54.7129, width: 17.4251, height: 9.0285, rx: -47, ry: 1.5, rz: 2 },
   crxss:    { left: 37.4628, top: 89.6998, width: 6.4685,  height: 4.8435, rotate: -28.5 }
 };
 
@@ -74,11 +75,15 @@ export default function PizzaDaoArcadePage() {
           <span className={styles.joystickKnob} />
         </div>
 
+        <div className={styles.pizzaOverlay} style={{ left: `${L.pizza.left}%`, top: `${L.pizza.top}%`, width: `${L.pizza.width}%`, height: `${L.pizza.height}%`, transform: `perspective(900px) rotateX(${L.pizza.rx}deg) rotateY(${L.pizza.ry}deg) rotateZ(${L.pizza.rz}deg)`, transformOrigin: '50% 50%' }}>
+          <img src={withBase("/pizzadao/stool-pizza-v2.png")} alt="Pizza plate" className={styles.pizzaImage} />
+        </div>
+
         <button className={styles.enterButton} style={{ left: `${L.button.left}%`, top: `${L.button.top}%`, width: `${L.button.width}%`, height: `${L.button.height}%` }} onClick={onEnter} aria-label="Start">
           <img src={withBase("/pizzadao/start-button.png")} alt="Start" className={styles.startButtonImage} />
         </button>
 
-        <a href="https://www.crxss.xyz" target="_blank" rel="noopener noreferrer" className={styles.crxssHotspot}
+        <a href="https://crxss.xyz" target="_blank" rel="noopener noreferrer" className={styles.crxssHotspot}
           style={{ left: `${L.crxss.left}%`, top: `${L.crxss.top}%`, width: `${L.crxss.width}%`, height: `${L.crxss.height}%`, transform: `rotate(${L.crxss.rotate}deg)` }}
           aria-label="Created by CRXSS" />
       </div>
