@@ -9,7 +9,7 @@ const withBase = (src: string) => (src.startsWith('/') ? `${BASE_PATH}${src}` : 
 
 const GAME_OPTIONS = [
   { name: 'Bitcoin Pizza Blastoff', subtitle: 'Orbit Run', thumbnail: 'https://c-r-x-s-s.github.io/Bitcoin-Pizza-Blastoff/Assets/Visual/logo.png', link: 'https://c-r-x-s-s.github.io/Bitcoin-Pizza-Blastoff/' },
-  { name: 'Pizza Chef', subtitle: 'Kitchen Rush', thumbnail: '/pizzadao/pizza-chef-thumb.jpg', link: 'https://pizzachef.bolt.host/' },
+  { name: 'Pizza Chef', subtitle: 'Kitchen Rush', thumbnail: '/pizzadao/pizza-chef-thumb.jpg', link: 'https://pizzachef.meme/' },
   { name: 'Pizza Flight Simulator', subtitle: 'Space Shooter', thumbnail: 'https://judgeartist.com/wp-content/uploads/2021/05/PizzaBox.jpg', link: 'https://judgeartist.com/portfolio-items/pizza-flight-simulator/?portfolioCats=22' },
   { name: "Molto Benny's Delivery Route", subtitle: 'Delivery Dash', thumbnail: 'https://images.squarespace-cdn.com/content/v1/6462e2c2553b2d3fc022842f/d9c2a6aa-8949-4d23-a9d7-757a2d87e62e/Global_PizzaParty_Animate-ONLY_950.gif?format=750w', link: 'https://pizzadao.github.io/moltobennydelivery/' },
   { name: 'Pizza Personality Quiz Game', subtitle: 'Quiz Challenge', thumbnail: '/pizzadao/pizza-quiz-thumb.jpg', link: 'https://pizzaquiz.bolt.host/' },
